@@ -16,7 +16,7 @@ Double-click **`setup-db.bat`** (or run it from a terminal) and enter your MySQL
 when prompted.
 
 It executes `schema.sql`, which drops and recreates the `smart_parking` database and loads
-seed users, employees, vehicles and 96 parking slots.
+seed users, employees, vehicles and 144 parking slots.
 
 ## 2. Configure the password
 
@@ -52,7 +52,24 @@ Employees (seeded):
 | `manager` | `admin123` | Manager |
 | `attendant` | `park456` | Attendant |
 
-Seeded user example: `USR-1001` / `pass1234`.
+Seeded users (15) — passwords are shown in `schema.sql`, e.g. `USR-1001` / `pass1234`,
+`USR-2045` / `priya@99`, `USR-7321` / `rohan789`.
+
+## Seed data summary
+
+| Table | Rows |
+|-------|------|
+| `Users` | 15 |
+| `Vehicles` | 27 |
+| `Employees` | 2 |
+| `Floors` | 3 |
+| `ParkingSlots` | 144 (48 per floor) |
+| `ParkingTickets` | 0 (created at runtime) |
+
+Each floor has 4 rows (A–D) × 4 pillar sections × 3 slots. The slot type of a pillar section is
+**randomised per floor**, and a few sections are **mixed** (2 slots of one type + 1 of the other),
+so the manual allocation grid always shows a varied picture. Every floor still balances to
+24 × `4W` and 24 × `2W`.
 
 ## Project structure
 

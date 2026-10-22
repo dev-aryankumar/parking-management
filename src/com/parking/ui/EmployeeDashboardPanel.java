@@ -22,13 +22,14 @@ public class EmployeeDashboardPanel extends JPanel {
     public EmployeeDashboardPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(0xF5F5F5));
+        setBackground(Theme.BG);
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
         headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        headerLabel.setForeground(new Color(0x1565C0));
+        headerLabel.setForeground(Theme.TEAL_DARK);
 
         JButton logout = new JButton("Logout");
+        Theme.secondary(logout);
         logout.addActionListener(e -> mainFrame.logout());
 
         JPanel top = new JPanel(new BorderLayout());
@@ -42,6 +43,7 @@ public class EmployeeDashboardPanel extends JPanel {
 
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tabs.setBackground(Theme.BG);
         tabs.addTab("Entry Gate", entryGatePanel);
         tabs.addTab("Exit Gate", exitGatePanel);
         add(tabs, BorderLayout.CENTER);

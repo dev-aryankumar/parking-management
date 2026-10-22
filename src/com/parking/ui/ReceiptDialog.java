@@ -22,16 +22,16 @@ public class ReceiptDialog extends JDialog {
     public ReceiptDialog(JFrame parent, String title, Map<String, String> fields) {
         super(parent, title, true);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Theme.CARD);
 
         JLabel heading = new JLabel(title, SwingConstants.CENTER);
         heading.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        heading.setForeground(new Color(0x1565C0));
+        heading.setForeground(Theme.TEAL_DARK);
         heading.setBorder(BorderFactory.createEmptyBorder(16, 16, 0, 16));
         add(heading, BorderLayout.NORTH);
 
         JPanel body = new JPanel(new GridBagLayout());
-        body.setBackground(Color.WHITE);
+        body.setBackground(Theme.CARD);
         body.setBorder(BorderFactory.createEmptyBorder(10, 24, 10, 24));
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -39,7 +39,7 @@ public class ReceiptDialog extends JDialog {
         for (Map.Entry<String, String> entry : fields.entrySet()) {
             JLabel key = new JLabel(entry.getKey() + " :");
             key.setFont(new Font("Consolas", Font.BOLD, 14));
-            key.setForeground(new Color(0x424242));
+            key.setForeground(Theme.MUTED);
             gbc.gridx = 0;
             gbc.gridy = row;
             gbc.anchor = GridBagConstraints.EAST;
@@ -48,7 +48,7 @@ public class ReceiptDialog extends JDialog {
 
             JLabel value = new JLabel(entry.getValue());
             value.setFont(new Font("Consolas", Font.PLAIN, 14));
-            value.setForeground(new Color(0x212121));
+            value.setForeground(Theme.TEXT);
             gbc.gridx = 1;
             gbc.anchor = GridBagConstraints.WEST;
             gbc.insets = new Insets(3, 0, 3, 0);
@@ -58,15 +58,12 @@ public class ReceiptDialog extends JDialog {
         add(body, BorderLayout.CENTER);
 
         JButton ok = new JButton("OK");
+        Theme.primary(ok);
         ok.setPreferredSize(new Dimension(120, 34));
-        ok.setBackground(new Color(0x2196F3));
-        ok.setForeground(Color.WHITE);
-        ok.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        ok.setFocusPainted(false);
         ok.addActionListener(e -> dispose());
 
         JPanel footer = new JPanel();
-        footer.setBackground(Color.WHITE);
+        footer.setBackground(Theme.CARD);
         footer.setBorder(BorderFactory.createEmptyBorder(0, 0, 16, 0));
         footer.add(ok);
         add(footer, BorderLayout.SOUTH);

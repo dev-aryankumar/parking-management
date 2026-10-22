@@ -16,6 +16,7 @@ import com.parking.util.FeeCalculator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -60,6 +61,7 @@ public class ExitGatePanel extends JPanel {
 
     public ExitGatePanel() {
         setLayout(new BorderLayout(0, 8));
+        setBackground(Theme.BG);
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel top = new JPanel();
@@ -68,30 +70,35 @@ public class ExitGatePanel extends JPanel {
 
         JPanel searchRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
         searchRow.setOpaque(false);
+        searchRow.setAlignmentY(JComponent.TOP_ALIGNMENT);
         JLabel searchLabel = new JLabel("User ID:");
         searchLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        searchLabel.setForeground(Theme.TEXT);
         searchRow.add(searchLabel);
         searchRow.add(userIdField);
         JButton searchButton = new JButton("Search");
+        Theme.secondary(searchButton);
         searchButton.addActionListener(e -> handleSearch());
         searchRow.add(searchButton);
         top.add(searchRow);
 
         summaryArea.setEditable(false);
         summaryArea.setFont(new Font("Consolas", Font.PLAIN, 14));
-        summaryArea.setBackground(new Color(0xFAFAFA));
+        summaryArea.setBackground(Theme.CARD);
+        summaryArea.setForeground(Theme.TEXT);
+        summaryArea.setCaretColor(Theme.TEXT);
         summaryArea.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         summaryArea.setText("Search a user to view their active parking session.");
-        top.add(new JScrollPane(summaryArea));
+        JScrollPane summaryScroll = new JScrollPane(summaryArea);
+        summaryScroll.setBorder(BorderFactory.createLineBorder(Theme.BORDER));
+        summaryScroll.setAlignmentY(JComponent.TOP_ALIGNMENT);
+        top.add(summaryScroll);
 
         add(top, BorderLayout.CENTER);
 
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         footer.setOpaque(false);
-        confirmButton.setBackground(new Color(0x2196F3));
-        confirmButton.setForeground(Color.WHITE);
-        confirmButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        confirmButton.setFocusPainted(false);
+        Theme.primary(confirmButton);
         confirmButton.addActionListener(e -> handleConfirm());
         footer.add(confirmButton);
         add(footer, BorderLayout.SOUTH);

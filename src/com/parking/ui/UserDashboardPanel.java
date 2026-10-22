@@ -36,28 +36,28 @@ public class UserDashboardPanel extends JPanel {
     private final JLabel headerLabel = new JLabel(" ");
     private final DefaultTableModel tableModel;
     private final JTable table;
+    private final JPanel center;
+    private final JLabel emptyState;
     private User currentUser;
 
     public UserDashboardPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(0xF5F5F5));
+        setBackground(Theme.BG);
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
         headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        headerLabel.setForeground(new Color(0x1565C0));
+        headerLabel.setForeground(Theme.TEAL_DARK);
 
         JButton logout = new JButton("Logout");
+        Theme.secondary(logout);
         logout.addActionListener(e -> {
             currentUser = null;
             mainFrame.logout();
         });
 
         JButton addVehicle = new JButton("+ Add Vehicle");
-        addVehicle.setBackground(new Color(0x2196F3));
-        addVehicle.setForeground(Color.WHITE);
-        addVehicle.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        addVehicle.setFocusPainted(false);
+        Theme.primary(addVehicle);
         addVehicle.addActionListener(e -> openAddVehicleDialog());
 
         JPanel top = new JPanel(new BorderLayout());
@@ -81,19 +81,60 @@ public class UserDashboardPanel extends JPanel {
         table = new JTable(tableModel);
         table.setRowHeight(26);
         table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        table.getTableHeader().setReorderingAllowed(false);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        table.setBackground(Theme.CARD);
+        table.setForeground(Theme.TEXT);
+        table.setGridColor(Theme.BORDER);
+        table.setShowVerticalLines(true);
+
+        // The Windows look-and-feel paints its own table header, so the header
+        // labels are drawn with an explicit renderer to guarantee contrast.
+        table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable headerTable, Object value,
+                                                                   boolean isSelected, boolean hasFocus,
+                                                                   int row, int column) {
+                java.awt.Component component = super.getTableCellRendererComponent(
+                        headerTable, value, isSelected, hasFocus, row, column);
+                setBackground(Theme.TEAL_DARK);
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.BOLD, 13));
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+                return component;
+            }
+        });
+
         DefaultTableCellRenderer centered = new DefaultTableCellRenderer();
         centered.setHorizontalAlignment(SwingConstants.CENTER);
+        centered.setBackground(Theme.CARD);
+        centered.setForeground(Theme.TEXT);
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centered);
         }
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Active Parking Tickets"));
-        add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getViewport().setBackground(Theme.CARD);
+        scrollPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Theme.BORDER), "Active Parking Tickets",
+                javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP,
+                new Font("Segoe UI", Font.BOLD, 13), Theme.TEAL_DARK));
+
+        emptyState = new JLabel("No active parking tickets.", SwingConstants.CENTER);
+        emptyState.setForeground(Theme.MUTED);
+        emptyState.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        emptyState.setBackground(Theme.CARD);
+        emptyState.setOpaque(true);
+
+        center = new JPanel(new java.awt.CardLayout());
+        center.setBackground(Theme.CARD);
+        center.add(scrollPane, "TABLE");
+        center.add(emptyState, "EMPTY");
+        add(center, BorderLayout.CENTER);
 
         JLabel hint = new JLabel("Tickets shown here disappear automatically after the vehicle exits.", SwingConstants.CENTER);
-        hint.setForeground(new Color(0x616161));
+        hint.setForeground(Theme.MUTED);
         add(hint, BorderLayout.SOUTH);
     }
 
@@ -108,6 +149,7 @@ public class UserDashboardPanel extends JPanel {
     private void refreshTickets() {
         tableModel.setRowCount(0);
         if (currentUser == null) {
+            showEmptyState();
             return;
         }
         try {
@@ -126,6 +168,11 @@ public class UserDashboardPanel extends JPanel {
                     "Could not load active tickets: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
+        showEmptyState();
+    }
+
+    private void showEmptyState() {
+        ((java.awt.CardLayout) center.getLayout()).show(center, tableModel.getRowCount() == 0 ? "EMPTY" : "TABLE");
     }
 
     private void openAddVehicleDialog() {

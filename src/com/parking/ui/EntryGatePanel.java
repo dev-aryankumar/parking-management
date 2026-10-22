@@ -14,7 +14,6 @@ import com.parking.model.User;
 import com.parking.model.Vehicle;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +29,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -47,7 +49,7 @@ public class EntryGatePanel extends JPanel {
     private final ParkingTicketDAO ticketDAO = new ParkingTicketDAO();
     private final FloorDAO floorDAO = new FloorDAO();
 
-    private final JTextField userIdField = new JTextField(15);
+    private final JTextField userIdField = new JTextField(14);
     private final JLabel customerLabel = new JLabel("Search a user to begin.");
     private final JComboBox<Vehicle> vehicleCombo = new JComboBox<>();
     private final JRadioButton autoRadio = new JRadioButton("Auto-Assign", true);
@@ -60,72 +62,92 @@ public class EntryGatePanel extends JPanel {
 
     public EntryGatePanel() {
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBackground(Theme.BG);
+        setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBackground(new Color(0xFAFAFA));
+        JPanel content = new JPanel(new GridBagLayout());
+        content.setBackground(Theme.CARD);
+        content.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Theme.BORDER),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.insets = new Insets(2, 0, 2, 0);
 
         // --- Search row -----------------------------------------------------
-        JPanel searchRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
+        JPanel searchRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 2));
         searchRow.setOpaque(false);
         JLabel searchLabel = new JLabel("User ID:");
         searchLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        searchLabel.setForeground(Theme.TEXT);
         searchRow.add(searchLabel);
         searchRow.add(userIdField);
         JButton searchButton = new JButton("Search");
+        Theme.secondary(searchButton);
         searchButton.addActionListener(e -> handleSearch());
         searchRow.add(searchButton);
-        content.add(searchRow);
+        addRow(content, gbc, 0, searchRow, 0);
 
         // --- Customer summary ----------------------------------------------
-        JPanel customerRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
+        JPanel customerRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 2));
         customerRow.setOpaque(false);
         customerLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        customerLabel.setForeground(new Color(0x1565C0));
+        customerLabel.setForeground(Theme.TEAL_DARK);
         customerRow.add(customerLabel);
-        content.add(customerRow);
+        addRow(content, gbc, 1, customerRow, 0);
 
         // --- Vehicle selection ---------------------------------------------
-        JPanel vehicleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
+        JPanel vehicleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 2));
         vehicleRow.setOpaque(false);
         JLabel vehicleLabel = new JLabel("Vehicle:");
         vehicleLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        vehicleLabel.setForeground(Theme.TEXT);
         vehicleRow.add(vehicleLabel);
-        vehicleCombo.setPreferredSize(new java.awt.Dimension(240, 28));
+        vehicleCombo.setPreferredSize(new java.awt.Dimension(230, 28));
+        vehicleCombo.setFont(Theme.FONT);
         vehicleRow.add(vehicleCombo);
-        content.add(vehicleRow);
+        addRow(content, gbc, 2, vehicleRow, 0);
 
         // --- Allocation mode ------------------------------------------------
-        JPanel modeRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
+        JPanel modeRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 2));
         modeRow.setOpaque(false);
         JLabel modeLabel = new JLabel("Allocation:");
         modeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        modeLabel.setForeground(Theme.TEXT);
         modeRow.add(modeLabel);
         ButtonGroup group = new ButtonGroup();
         group.add(autoRadio);
         group.add(manualRadio);
         autoRadio.setOpaque(false);
         manualRadio.setOpaque(false);
+        autoRadio.setForeground(Theme.TEXT);
+        manualRadio.setForeground(Theme.TEXT);
         modeRow.add(autoRadio);
         modeRow.add(manualRadio);
-        content.add(modeRow);
+        addRow(content, gbc, 3, modeRow, 0);
 
-        // --- Manual slot grid ----------------------------------------------
+        // --- Manual slot grid (grows to fill the remaining space) ----------
         slotGridPanel.setVisible(false);
-        slotGridPanel.setAlignmentX(LEFT_ALIGNMENT);
-        content.add(slotGridPanel);
+        addRow(content, gbc, 4, slotGridPanel, 0);
 
-        // --- Confirm --------------------------------------------------------
-        JPanel confirmRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 10));
+        // Filler keeps the form anchored to the top when the grid is hidden.
+        JPanel filler = new JPanel();
+        filler.setOpaque(false);
+        addRow(content, gbc, 5, filler, 1);
+
+        // --- Confirm (pinned below the scroll area so it is always visible) --
+        JPanel confirmRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
         confirmRow.setOpaque(false);
-        confirmButton.setBackground(new Color(0x2196F3));
-        confirmButton.setForeground(Color.WHITE);
-        confirmButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        confirmButton.setFocusPainted(false);
+        confirmRow.setBackground(Theme.CARD);
+        Theme.primary(confirmButton);
         confirmButton.addActionListener(e -> handleConfirm());
         confirmRow.add(confirmButton);
-        content.add(confirmRow);
+        add(confirmRow, BorderLayout.SOUTH);
 
         add(new JScrollPane(content), BorderLayout.CENTER);
 
@@ -143,6 +165,13 @@ public class EntryGatePanel extends JPanel {
             repaint();
         });
         vehicleCombo.addActionListener(e -> updateGridVehicleType());
+    }
+
+    private void addRow(JPanel target, GridBagConstraints gbc, int row, java.awt.Component component, double weighty) {
+        gbc.gridy = row;
+        gbc.weighty = weighty;
+        gbc.fill = GridBagConstraints.BOTH;
+        target.add(component, gbc);
     }
 
     public void setEmployee(Employee employee) {

@@ -44,7 +44,7 @@ public class UserAuthPanel extends JPanel {
     public UserAuthPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BorderLayout());
-        setBackground(new Color(0xF5F5F5));
+        setBackground(Theme.BG);
 
         tabs.addTab("Signup", buildSignupPanel());
         tabs.addTab("Login", buildLoginPanel());
@@ -52,9 +52,10 @@ public class UserAuthPanel extends JPanel {
         add(tabs, BorderLayout.CENTER);
 
         JButton back = new JButton("← Back");
+        Theme.secondary(back);
         back.addActionListener(e -> mainFrame.showCard(MainFrame.PORTAL_SELECTOR));
         JPanel footer = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        footer.setBackground(new Color(0xF5F5F5));
+        footer.setBackground(Theme.BG);
         footer.setBorder(BorderFactory.createEmptyBorder(6, 12, 10, 12));
         footer.add(back);
         add(footer, BorderLayout.SOUTH);
@@ -62,13 +63,15 @@ public class UserAuthPanel extends JPanel {
 
     private JPanel buildSignupPanel() {
         JPanel form = new JPanel(new GridBagLayout());
-        form.setBackground(Color.WHITE);
-        form.setBorder(BorderFactory.createEmptyBorder(24, 36, 24, 36));
+        form.setBackground(Theme.CARD);
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Theme.BORDER),
+                BorderFactory.createEmptyBorder(24, 36, 24, 36)));
 
         Font titleFont = new Font("Segoe UI", Font.BOLD, 22);
         JLabel title = new JLabel("Create your parking account");
         title.setFont(titleFont);
-        title.setForeground(new Color(0x1565C0));
+        title.setForeground(Theme.TEAL_DARK);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -85,7 +88,7 @@ public class UserAuthPanel extends JPanel {
         addRow(form, gbc, 4, "Vehicle Type", signupType);
 
         JButton submit = new JButton("Sign Up");
-        stylePrimary(submit);
+        Theme.primary(submit);
         submit.addActionListener(e -> handleSignup());
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -95,19 +98,21 @@ public class UserAuthPanel extends JPanel {
         form.add(submit, gbc);
 
         JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(new Color(0xF5F5F5));
+        wrapper.setBackground(Theme.BG);
         wrapper.add(form);
         return wrapper;
     }
 
     private JPanel buildLoginPanel() {
         JPanel form = new JPanel(new GridBagLayout());
-        form.setBackground(Color.WHITE);
-        form.setBorder(BorderFactory.createEmptyBorder(24, 36, 24, 36));
+        form.setBackground(Theme.CARD);
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Theme.BORDER),
+                BorderFactory.createEmptyBorder(24, 36, 24, 36)));
 
         JLabel title = new JLabel("Welcome back");
         title.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        title.setForeground(new Color(0x1565C0));
+        title.setForeground(Theme.TEAL_DARK);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -122,7 +127,7 @@ public class UserAuthPanel extends JPanel {
         addRow(form, gbc, 2, "Password", loginPassword);
 
         JButton login = new JButton("Login");
-        stylePrimary(login);
+        Theme.primary(login);
         login.addActionListener(e -> handleLogin());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -132,7 +137,7 @@ public class UserAuthPanel extends JPanel {
         form.add(login, gbc);
 
         JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(new Color(0xF5F5F5));
+        wrapper.setBackground(Theme.BG);
         wrapper.add(form);
         return wrapper;
     }
@@ -153,11 +158,7 @@ public class UserAuthPanel extends JPanel {
     }
 
     private void stylePrimary(JButton button) {
-        button.setBackground(new Color(0x2196F3));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        button.setFocusPainted(false);
-        button.setPreferredSize(new java.awt.Dimension(140, 36));
+        Theme.primary(button);
     }
 
     private void handleSignup() {

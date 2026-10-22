@@ -405,15 +405,27 @@ Examples: `A1-A2`, `A3-A4`, `B5-B6`, `D7-D8`
 
 ### 5.3 Slot Type Assignment Strategy
 
-For the seed data, slots can be assigned types as follows (configurable):
+Slot types are **not** tied to a fixed row. Each floor gets its own randomised layout, and a few
+pillar sections are deliberately **mixed** so the manual allocation grid shows varied availability.
 
-| Pillar Sections        | Default Slot Type | Rationale                    |
-|-----------------------|-------------------|------------------------------|
-| Row A, Row B sections | `4W`              | Wider spaces for cars        |
-| Row C, Row D sections | `2W`              | Narrower spaces for bikes    |
+| Pillar Section Pattern | Slots                        | Rationale                              |
+|------------------------|------------------------------|----------------------------------------|
+| Uniform `4W` section   | 3 × `4W`                     | Wider spaces for cars                  |
+| Uniform `2W` section   | 3 × `2W`                     | Narrower spaces for bikes              |
+| Mixed section (2 + 1)  | 2 × `4W` + 1 × `2W`          | Section shared between both vehicle types |
+| Mixed section (1 + 2)  | 1 × `4W` + 2 × `2W`          | Section shared between both vehicle types |
+
+Per floor the seed data contains **7 uniform `4W` sections, 7 uniform `2W` sections, 1 section with
+2 × `4W` + 1 × `2W` and 1 section with 1 × `4W` + 2 × `2W`**.
 
 > [!TIP]
-> This distribution gives 24 four-wheeler slots and 24 two-wheeler slots per floor — a balanced 50/50 split. Adjust in seed data as needed.
+> This distribution gives 24 four-wheeler slots and 24 two-wheeler slots per floor — a balanced
+> 50/50 split — while the mixed sections make the allocation grid interesting to demo.
+
+### 5.4 Number of Floors
+
+The seed data provides **3 floors** (`Floor 1`, `Floor 2`, `Floor 3`), each with 48 slots
+(4 rows × 4 pillar sections × 3 slots). Total: **144 slots**, 72 × `4W` and 72 × `2W`.
 
 ---
 
@@ -487,17 +499,35 @@ For the seed data, slots can be assigned types as follows (configurable):
   - Colored text: `<html><font color='green'>Available</font></html>`
 - Receipt modals use monospaced-style formatting for alignment.
 
-### 7.4 Color Scheme (Suggested)
+### 7.4 Color Scheme (Teal + Amber)
+
+> [!IMPORTANT]
+> All colours live in `com.parking.ui.Theme`. The slot-grid buttons paint themselves so the
+> Windows look-and-feel can never wash the fill out.
 
 | Element                     | Color        | Hex       |
 |-----------------------------|-------------|-----------|
-| Primary Action Buttons       | Blue        | `#2196F3` |
-| Success / Available          | Green       | `#4CAF50` |
-| Error / Occupied             | Red         | `#F44336` |
-| Warning / Caution            | Amber       | `#FF9800` |
-| Panel Backgrounds            | Light Gray  | `#F5F5F5` |
-| Header Backgrounds           | Dark Blue   | `#1565C0` |
-| Text Primary                 | Dark Gray   | `#212121` |
+| Primary Action Buttons       | Teal        | `#137E7E` |
+| Primary Button (hover)       | Deep Teal   | `#0F6B6B` |
+| Headings / Titles            | Dark Teal   | `#0F4C5C` |
+| Success / Available slot     | Mint fill   | `#CFEFD9` (text `#0B5D2A`) |
+| Error / Full slot            | Rose fill   | `#F8D7D6` (text `#8A1C1C`) |
+| Selected pillar section      | Amber ring  | `#F2A900` |
+| Secondary Buttons            | White       | `#FFFFFF` (text `#0F4C5C`) |
+| Panel Backgrounds            | Off-white   | `#F6FAFA` |
+| Card / Form Backgrounds      | White       | `#FFFFFF` |
+| Table Header                 | Dark Teal   | `#0F4C5C` (text `#FFFFFF`) |
+| Text Primary                 | Charcoal    | `#1E2B2C` |
+| Text Muted                   | Slate       | `#5C6B6C` |
+| Borders                      | Pale Slate  | `#CFDDDD` |
+
+### 7.5 Readability Rules
+
+- Never rely on the look-and-feel to paint a background — set an explicit renderer
+  (see the table header renderer in `UserDashboardPanel`).
+- Slot grid text always uses a dark colour on a light fill.
+- The window auto-sizes to the usable screen area, dividing the physical screen size by the
+  display scale so 125% / 150% Windows scaling does not push content off-screen.
 
 ---
 

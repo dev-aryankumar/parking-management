@@ -6,6 +6,10 @@ import com.parking.model.User;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
@@ -23,8 +27,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setTitle("Smart Parking Management System");
-        setSize(1000, 700);
-        setMinimumSize(new java.awt.Dimension(900, 620));
+        applyResponsiveSize();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -40,6 +43,32 @@ public class MainFrame extends JFrame {
 
         setContentPane(cards);
         showCard(PORTAL_SELECTOR);
+    }
+
+    /**
+     * Sizes the window to the usable screen area. Swing sizes are logical
+     * units, so the physical screen size is divided by the display scale
+     * (Windows 125% / 150% would otherwise push the window off-screen).
+     */
+    private void applyResponsiveSize() {
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration();
+        double scale = gc.getDefaultTransform().getScaleX();
+        if (scale <= 0) {
+            scale = 1.0;
+        }
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int logicalWidth = (int) Math.floor(screen.width / scale);
+        int logicalHeight = (int) Math.floor(screen.height / scale);
+
+        int width = Math.min(1000, logicalWidth - 40);
+        int height = Math.min(700, logicalHeight - 30);
+        width = Math.max(760, width);
+        height = Math.max(470, height);
+
+        setSize(width, height);
+        setMinimumSize(new Dimension(720, 450));
+        cards.setBackground(Theme.BG);
     }
 
     public void showCard(String cardName) {

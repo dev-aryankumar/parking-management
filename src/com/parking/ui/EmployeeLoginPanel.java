@@ -29,15 +29,17 @@ public class EmployeeLoginPanel extends JPanel {
     public EmployeeLoginPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BorderLayout());
-        setBackground(new Color(0xF5F5F5));
+        setBackground(Theme.BG);
 
         JPanel form = new JPanel(new GridBagLayout());
-        form.setBackground(Color.WHITE);
-        form.setBorder(BorderFactory.createEmptyBorder(24, 36, 24, 36));
+        form.setBackground(Theme.CARD);
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Theme.BORDER),
+                BorderFactory.createEmptyBorder(24, 36, 24, 36)));
 
         JLabel title = new JLabel("Employee Login");
         title.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        title.setForeground(new Color(0x1565C0));
+        title.setForeground(Theme.TEAL_DARK);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -52,11 +54,7 @@ public class EmployeeLoginPanel extends JPanel {
         addRow(form, gbc, 2, "Password", passwordField);
 
         JButton login = new JButton("Login");
-        login.setBackground(new Color(0x2196F3));
-        login.setForeground(Color.WHITE);
-        login.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        login.setFocusPainted(false);
-        login.setPreferredSize(new java.awt.Dimension(140, 36));
+        Theme.primary(login);
         login.addActionListener(e -> handleLogin());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -66,14 +64,15 @@ public class EmployeeLoginPanel extends JPanel {
         form.add(login, gbc);
 
         JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(new Color(0xF5F5F5));
+        wrapper.setBackground(Theme.BG);
         wrapper.add(form);
         add(wrapper, BorderLayout.CENTER);
 
         JButton back = new JButton("← Back");
+        Theme.secondary(back);
         back.addActionListener(e -> mainFrame.showCard(MainFrame.PORTAL_SELECTOR));
         JPanel footer = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        footer.setBackground(new Color(0xF5F5F5));
+        footer.setBackground(Theme.BG);
         footer.setBorder(BorderFactory.createEmptyBorder(6, 12, 10, 12));
         footer.add(back);
         add(footer, BorderLayout.SOUTH);
