@@ -1,0 +1,242 @@
+-- ============================================================================
+-- Smart Parking Management System — Database Schema & Seed Data
+-- Engine: MySQL 8.x / InnoDB with enforced Foreign Key Constraints
+-- Version: 1.0.0
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 0. DATABASE SETUP
+-- ----------------------------------------------------------------------------
+DROP DATABASE IF EXISTS smart_parking;
+CREATE DATABASE smart_parking
+    DEFAULT CHARACTER SET utf8mb4
+    DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE smart_parking;
+
+-- ----------------------------------------------------------------------------
+-- 1. USERS TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE Users (
+    user_id     VARCHAR(10)     NOT NULL,
+    name        VARCHAR(100)    NOT NULL,
+    password    VARCHAR(100)    NOT NULL,
+    created_at  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 2. VEHICLES TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE Vehicles (
+    vehicle_number  VARCHAR(20)             NOT NULL,
+    user_id         VARCHAR(10)             NOT NULL,
+    type            ENUM('2W', '4W')        NOT NULL,
+    registered_at   TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (vehicle_number),
+    INDEX idx_vehicles_user (user_id),
+    CONSTRAINT fk_vehicles_user
+        FOREIGN KEY (user_id) REFERENCES Users(user_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 3. EMPLOYEES TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE Employees (
+    employee_id INT             NOT NULL AUTO_INCREMENT,
+    username    VARCHAR(50)     NOT NULL UNIQUE,
+    password    VARCHAR(100)    NOT NULL,
+    role        VARCHAR(30)     NOT NULL DEFAULT 'Attendant',
+    created_at  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (employee_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 4. FLOORS TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE Floors (
+    floor_id        INT             NOT NULL AUTO_INCREMENT,
+    floor_number    VARCHAR(20)     NOT NULL UNIQUE,
+    PRIMARY KEY (floor_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 5. PARKING SLOTS TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE ParkingSlots (
+    slot_id         INT                     NOT NULL AUTO_INCREMENT,
+    floor_id        INT                     NOT NULL,
+    pillar_section  VARCHAR(10)             NOT NULL,
+    slot_type       ENUM('2W', '4W')        NOT NULL,
+    is_occupied     BOOLEAN                 NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (slot_id),
+    INDEX idx_slots_floor (floor_id),
+    INDEX idx_slots_availability (slot_type, is_occupied),
+    INDEX idx_slots_pillar (floor_id, pillar_section, slot_type),
+    CONSTRAINT fk_slots_floor
+        FOREIGN KEY (floor_id) REFERENCES Floors(floor_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- 6. PARKING TICKETS TABLE
+-- ----------------------------------------------------------------------------
+CREATE TABLE ParkingTickets (
+    ticket_id       INT                 NOT NULL AUTO_INCREMENT,
+    vehicle_number  VARCHAR(20)         NOT NULL,
+    slot_id         INT                 NOT NULL,
+    employee_id     INT                 NOT NULL,
+    entry_time      DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    exit_time       DATETIME            NULL DEFAULT NULL,
+    total_fee       DECIMAL(10,2)       NULL DEFAULT NULL,
+    PRIMARY KEY (ticket_id),
+    INDEX idx_tickets_vehicle (vehicle_number),
+    INDEX idx_tickets_active (vehicle_number, exit_time),
+    INDEX idx_tickets_slot (slot_id),
+    CONSTRAINT fk_tickets_vehicle
+        FOREIGN KEY (vehicle_number) REFERENCES Vehicles(vehicle_number)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_tickets_slot
+        FOREIGN KEY (slot_id) REFERENCES ParkingSlots(slot_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_tickets_employee
+        FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================================
+-- SEED DATA
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- S1. SEED EMPLOYEES (Hardcoded — no registration UI)
+-- ----------------------------------------------------------------------------
+INSERT INTO Employees (username, password, role) VALUES
+    ('manager',   'admin123', 'Manager'),
+    ('attendant', 'park456',  'Attendant');
+
+-- ----------------------------------------------------------------------------
+-- S2. SEED USERS
+-- ----------------------------------------------------------------------------
+INSERT INTO Users (user_id, name, password) VALUES
+    ('USR-1001', 'Aryan Kumar',    'pass1234'),
+    ('USR-2045', 'Priya Sharma',   'priya@99'),
+    ('USR-3782', 'Rahul Verma',    'rahul123'),
+    ('USR-4510', 'Sneha Patel',    'sneha456'),
+    ('USR-5267', 'Amit Singh',     'amit2026');
+
+-- ----------------------------------------------------------------------------
+-- S3. SEED VEHICLES (Multiple vehicles per some users)
+-- ----------------------------------------------------------------------------
+INSERT INTO Vehicles (vehicle_number, user_id, type) VALUES
+    -- Aryan Kumar's vehicles
+    ('KA-01-AB-1234', 'USR-1001', '4W'),
+    ('KA-01-CD-5678', 'USR-1001', '2W'),
+    -- Priya Sharma's vehicle
+    ('MH-02-EF-9012', 'USR-2045', '4W'),
+    -- Rahul Verma's vehicles
+    ('DL-03-GH-3456', 'USR-3782', '2W'),
+    ('DL-03-IJ-7890',  'USR-3782', '4W'),
+    -- Sneha Patel's vehicle
+    ('GJ-04-KL-1122', 'USR-4510', '2W'),
+    -- Amit Singh's vehicles
+    ('UP-05-MN-3344', 'USR-5267', '4W'),
+    ('UP-05-OP-5566', 'USR-5267', '2W');
+
+-- ----------------------------------------------------------------------------
+-- S4. SEED FLOORS
+-- ----------------------------------------------------------------------------
+INSERT INTO Floors (floor_number) VALUES
+    ('Floor 1'),
+    ('Floor 2');
+
+-- ----------------------------------------------------------------------------
+-- S5. SEED PARKING SLOTS
+-- Slot Type Assignment:
+--   Rows A & B → 4W (four-wheeler)
+--   Rows C & D → 2W (two-wheeler)
+-- Each pillar section has exactly 3 slots.
+-- Floor 1 = floor_id 1, Floor 2 = floor_id 2
+-- ----------------------------------------------------------------------------
+
+-- ── FLOOR 1 ─────────────────────────────────────────────────────────────────
+
+-- Row A (4W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (1, 'A1-A2', '4W'), (1, 'A1-A2', '4W'), (1, 'A1-A2', '4W'),
+    (1, 'A3-A4', '4W'), (1, 'A3-A4', '4W'), (1, 'A3-A4', '4W'),
+    (1, 'A5-A6', '4W'), (1, 'A5-A6', '4W'), (1, 'A5-A6', '4W'),
+    (1, 'A7-A8', '4W'), (1, 'A7-A8', '4W'), (1, 'A7-A8', '4W');
+
+-- Row B (4W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (1, 'B1-B2', '4W'), (1, 'B1-B2', '4W'), (1, 'B1-B2', '4W'),
+    (1, 'B3-B4', '4W'), (1, 'B3-B4', '4W'), (1, 'B3-B4', '4W'),
+    (1, 'B5-B6', '4W'), (1, 'B5-B6', '4W'), (1, 'B5-B6', '4W'),
+    (1, 'B7-B8', '4W'), (1, 'B7-B8', '4W'), (1, 'B7-B8', '4W');
+
+-- Row C (2W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (1, 'C1-C2', '2W'), (1, 'C1-C2', '2W'), (1, 'C1-C2', '2W'),
+    (1, 'C3-C4', '2W'), (1, 'C3-C4', '2W'), (1, 'C3-C4', '2W'),
+    (1, 'C5-C6', '2W'), (1, 'C5-C6', '2W'), (1, 'C5-C6', '2W'),
+    (1, 'C7-C8', '2W'), (1, 'C7-C8', '2W'), (1, 'C7-C8', '2W');
+
+-- Row D (2W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (1, 'D1-D2', '2W'), (1, 'D1-D2', '2W'), (1, 'D1-D2', '2W'),
+    (1, 'D3-D4', '2W'), (1, 'D3-D4', '2W'), (1, 'D3-D4', '2W'),
+    (1, 'D5-D6', '2W'), (1, 'D5-D6', '2W'), (1, 'D5-D6', '2W'),
+    (1, 'D7-D8', '2W'), (1, 'D7-D8', '2W'), (1, 'D7-D8', '2W');
+
+-- ── FLOOR 2 ─────────────────────────────────────────────────────────────────
+
+-- Row A (4W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (2, 'A1-A2', '4W'), (2, 'A1-A2', '4W'), (2, 'A1-A2', '4W'),
+    (2, 'A3-A4', '4W'), (2, 'A3-A4', '4W'), (2, 'A3-A4', '4W'),
+    (2, 'A5-A6', '4W'), (2, 'A5-A6', '4W'), (2, 'A5-A6', '4W'),
+    (2, 'A7-A8', '4W'), (2, 'A7-A8', '4W'), (2, 'A7-A8', '4W');
+
+-- Row B (4W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (2, 'B1-B2', '4W'), (2, 'B1-B2', '4W'), (2, 'B1-B2', '4W'),
+    (2, 'B3-B4', '4W'), (2, 'B3-B4', '4W'), (2, 'B3-B4', '4W'),
+    (2, 'B5-B6', '4W'), (2, 'B5-B6', '4W'), (2, 'B5-B6', '4W'),
+    (2, 'B7-B8', '4W'), (2, 'B7-B8', '4W'), (2, 'B7-B8', '4W');
+
+-- Row C (2W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (2, 'C1-C2', '2W'), (2, 'C1-C2', '2W'), (2, 'C1-C2', '2W'),
+    (2, 'C3-C4', '2W'), (2, 'C3-C4', '2W'), (2, 'C3-C4', '2W'),
+    (2, 'C5-C6', '2W'), (2, 'C5-C6', '2W'), (2, 'C5-C6', '2W'),
+    (2, 'C7-C8', '2W'), (2, 'C7-C8', '2W'), (2, 'C7-C8', '2W');
+
+-- Row D (2W)
+INSERT INTO ParkingSlots (floor_id, pillar_section, slot_type) VALUES
+    (2, 'D1-D2', '2W'), (2, 'D1-D2', '2W'), (2, 'D1-D2', '2W'),
+    (2, 'D3-D4', '2W'), (2, 'D3-D4', '2W'), (2, 'D3-D4', '2W'),
+    (2, 'D5-D6', '2W'), (2, 'D5-D6', '2W'), (2, 'D5-D6', '2W'),
+    (2, 'D7-D8', '2W'), (2, 'D7-D8', '2W'), (2, 'D7-D8', '2W');
+
+-- ============================================================================
+-- VERIFICATION QUERIES (run manually to confirm seed data)
+-- ============================================================================
+-- SELECT COUNT(*) AS total_users FROM Users;              -- Expected: 5
+-- SELECT COUNT(*) AS total_vehicles FROM Vehicles;        -- Expected: 8
+-- SELECT COUNT(*) AS total_employees FROM Employees;      -- Expected: 2
+-- SELECT COUNT(*) AS total_floors FROM Floors;            -- Expected: 2
+-- SELECT COUNT(*) AS total_slots FROM ParkingSlots;       -- Expected: 96 (48 per floor × 2 floors)
+-- SELECT slot_type, COUNT(*) FROM ParkingSlots GROUP BY slot_type;
+--   Expected: 4W = 48, 2W = 48
+-- SELECT floor_id, pillar_section, COUNT(*) AS slots
+--   FROM ParkingSlots GROUP BY floor_id, pillar_section;
+--   Expected: 3 slots per pillar_section per floor
+-- ============================================================================
