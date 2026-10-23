@@ -17,14 +17,16 @@
   .page-footer { position:absolute; left:0; right:0; bottom:-3mm; display:flex;
                  justify-content:space-between; font-size:8pt; color:#7A8A8B;
                  border-top:0.6px solid #CFDDDD; padding-top:1.6mm; }
+  .page-logo { position:absolute; top:-12.5mm; right:0; }
+  .page-logo img { height:9mm; }
 
   /* cover */
-  .cover { text-align:center; padding-top:6mm; }
+  .cover { text-align:center; padding-top:0; }
   .cover-top { font-size:12pt; letter-spacing:0.5px; }
   .cover-title { font-size:25pt; color:#0F4C5C; margin:4mm 0 2mm; line-height:1.15; }
   .cover-sub { font-size:13pt; color:#137E7E; font-style:italic; }
   .cover-rule { width:48mm; height:3px; background:#F2A900; margin:6mm auto; }
-  .cover-logo { width:115mm; height:22.9mm; object-fit:contain; margin:2mm 0 6mm; }
+  .cover-logo { width:70mm; display:block; margin:0 auto 8mm; }
   .cover-block { margin-bottom:6mm; font-size:12pt; line-height:1.7; }
   .cover-degree { font-weight:700; font-size:13pt; }
   .cover-small { font-size:12pt; }
@@ -83,11 +85,11 @@
 </style></head><body>
 <div class="page">
 <div class="cover">
+  <img class="cover-logo" src="report_assets/logo.png" alt="Manipal University Jaipur"/>
   <div class="cover-top">A PROJECT REPORT on</div>
   <h1 class="cover-title">Smart Parking Management System</h1>
   <div class="cover-sub">A Zero-Hardware Desktop Solution using Java Swing, JDBC and MySQL</div>
   <div class="cover-rule"></div>
-  <img class="cover-logo" src="report_assets/muj_logo.jpg" alt="Manipal University Jaipur"/>
   <div class="cover-block">
     <div>Submitted to <b>Manipal University Jaipur</b></div>
     <div>Towards the partial fulfillment for the Award of the Degree of</div>
@@ -109,7 +111,7 @@
     <div class="cover-univ">Jaipur, Rajasthan</div>
   </div>
 </div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">Abstract</h1>
 <p>Parking management in institutional and commercial campuses is still largely a manual
 operation: an attendant writes a vehicle number in a register, walks the floor to find a free
@@ -153,11 +155,11 @@ live database, covering identifier generation, duplicate-vehicle rejection, slot
 double-allocation prevention, fee boundaries and the full entry&ndash;exit lifecycle. All checks
 passed, and the test data was rolled back afterwards.</p>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>2</span></div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">Table of Contents</h1>
 <table class="toc"><tr><td>Abstract</td><td class="dots"></td><td class="num">2</td></tr><tr><td>1. Introduction</td><td class="dots"></td><td class="num">4</td></tr><tr><td>&nbsp;&nbsp;&nbsp;1.1 Scope of the Work</td><td class="dots"></td><td class="num">4</td></tr><tr><td>&nbsp;&nbsp;&nbsp;1.2 Product Scenarios</td><td class="dots"></td><td class="num">5</td></tr><tr><td>2. ER Diagram</td><td class="dots"></td><td class="num">6</td></tr><tr><td>3. Relational Schema Diagram</td><td class="dots"></td><td class="num">7</td></tr><tr><td>4. Relational Schema Tables</td><td class="dots"></td><td class="num">8</td></tr><tr><td>5. SQL &amp; DDL Queries</td><td class="dots"></td><td class="num">11</td></tr><tr><td>6. Sample DML Queries</td><td class="dots"></td><td class="num">14</td></tr><tr><td>7. Screenshots of Frontend and Backend</td><td class="dots"></td><td class="num">16</td></tr><tr><td>&nbsp;&nbsp;&nbsp;7.1 Frontend &mdash; customer and gate screens</td><td class="dots"></td><td class="num">16</td></tr><tr><td>&nbsp;&nbsp;&nbsp;7.2 Backend &mdash; database tables</td><td class="dots"></td><td class="num">22</td></tr><tr><td>8. Conclusion</td><td class="dots"></td><td class="num">27</td></tr><tr><td>9. References</td><td class="dots"></td><td class="num">28</td></tr></table>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>3</span></div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">1. Introduction</h1>
 <p>Parking is an inventory problem disguised as real estate. A facility has a fixed number of
 bays, each bay can hold one vehicle at a time, and every vehicle that enters must eventually
@@ -200,7 +202,7 @@ build.</p>
   </tbody>
 </table>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>4</span></div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">1. Introduction (continued)</h1>
 <h2>1.2 Product Scenarios</h2>
 <p>Five scenarios describe every interaction the system supports. They are listed in the order a
@@ -249,7 +251,7 @@ Section&nbsp;7.</p>
   vehicle has exited, so no stale state is ever displayed.</p>
 </div>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>5</span></div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">2. ER Diagram</h1>
 <p>The entity&ndash;relationship model contains six entity types. <code>Users</code> and
 <code>Vehicles</code> describe the customer side, <code>Employees</code> describes the staff who
@@ -268,7 +270,7 @@ session. Every relationship in the diagram is one-to-many with the foreign key o
 <h2>Cardinality summary</h2>
 <table class="grid "><thead><tr><th>Relationship</th><th>Rule</th><th>Participation</th><th>Implementation</th></tr></thead><tbody><tr><td>Users &rarr; Vehicles</td><td>1 : N</td><td>A vehicle belongs to exactly one customer; a customer may hold many vehicles.</td><td><code>Vehicles.user_id</code> references <code>Users.user_id</code></td></tr><tr><td>Vehicles &rarr; ParkingTickets</td><td>1 : N</td><td>A vehicle accumulates one ticket per visit.</td><td><code>ParkingTickets.vehicle_number</code> references <code>Vehicles.vehicle_number</code></td></tr><tr><td>Employees &rarr; ParkingTickets</td><td>1 : N</td><td>Every ticket records the attendant who issued it.</td><td><code>ParkingTickets.employee_id</code> references <code>Employees.employee_id</code></td></tr><tr><td>Floors &rarr; ParkingSlots</td><td>1 : N</td><td>Each bay belongs to exactly one floor.</td><td><code>ParkingSlots.floor_id</code> references <code>Floors.floor_id</code></td></tr><tr><td>ParkingSlots &rarr; ParkingTickets</td><td>1 : N</td><td>A bay is reused across visits and therefore appears on many tickets, but at most one open ticket at a time.</td><td><code>ParkingTickets.slot_id</code> references <code>ParkingSlots.slot_id</code></td></tr></tbody></table>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>6</span></div></div>
-<div class="page">
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>
 <h1 class="section">3. Relational Schema Diagram</h1>
 <p>Mapping the ER model to relations produces six tables. Each entity becomes a table, each
 one-to-many relationship is absorbed by placing the primary key of the <i>one</i> side into the
@@ -295,7 +297,7 @@ of the vehicle type, which lives in <code>Vehicles</code>.</p>
 grouped <code>COUNT</code>. Storing a per-section counter as well would introduce a transitive
 dependency and a second source of truth that could drift from the slot rows.</p>
 <div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>7</span></div></div>
-<div class="page"><h1 class="section">4. Relational Schema Tables</h1><p>The six relations below are documented exactly as they exist in the deployed database; the
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">4. Relational Schema Tables</h1><p>The six relations below are documented exactly as they exist in the deployed database; the
   column definitions, defaults and foreign keys were read from <code>INFORMATION_SCHEMA</code> at
   the time this report was generated.</p><h2>4.1 Users</h2>
       <p class="table-desc">One row per customer account. The identifier is generated by the application in the USR-XXXX range and is the credential the customer presents at the gate.</p>
@@ -306,18 +308,18 @@ dependency and a second source of truth that could drift from the slot rows.</p>
 <h2>4.3 Employees</h2>
       <p class="table-desc">Gate staff accounts. Employees are provisioned by the administrator; the role column distinguishes a manager from an attendant.</p>
       <table class="grid schema"><thead><tr><th>Key</th><th>Column</th><th>Type</th><th>Null</th><th>Default</th><th>References</th></tr></thead><tbody><tr><td></td><td><code>username</code></td><td><code>varchar(50)</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>password</code></td><td><code>varchar(100)</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>role</code></td><td><code>varchar(30)</code></td><td>NOT NULL</td><td><code>Attendant</code></td><td></td></tr><tr><td></td><td><code>created_at</code></td><td><code>timestamp</code></td><td>NOT NULL</td><td><code>CURRENT_TIMESTAMP</code></td><td></td></tr></tbody></table><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>8</span></div></div>
-<div class="page"><h1 class="section">4. Relational Schema Tables (continued)</h1><h2>4.4 Floors</h2>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">4. Relational Schema Tables (continued)</h1><h2>4.4 Floors</h2>
       <p class="table-desc">The physical floors of the facility. Floor numbering is stored as text so labels such as "Ground" or "B1" are possible without a schema change.</p>
       <table class="grid schema"><thead><tr><th>Key</th><th>Column</th><th>Type</th><th>Null</th><th>Default</th><th>References</th></tr></thead><tbody><tr><td>PK</td><td><code>floor_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>floor_number</code></td><td><code>varchar(20)</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr></tbody></table>
 <h2>4.5 ParkingSlots</h2>
       <p class="table-desc">One row per physical bay. A bay is identified by its floor and pillar section, and its type restricts which vehicles may occupy it. is_occupied is the single source of truth for availability.</p>
       <table class="grid schema"><thead><tr><th>Key</th><th>Column</th><th>Type</th><th>Null</th><th>Default</th><th>References</th></tr></thead><tbody><tr><td>PK</td><td><code>slot_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>floor_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>pillar_section</code></td><td><code>varchar(10)</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>slot_type</code></td><td><code>enum('2W','4W')</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>is_occupied</code></td><td><code>tinyint(1)</code></td><td>NOT NULL</td><td><code>0</code></td><td></td></tr></tbody></table><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>9</span></div></div>
-<div class="page"><h1 class="section">4. Relational Schema Tables (continued)</h1><p>The ticket relation is the only one that grows without bound during operation. Its composite
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">4. Relational Schema Tables (continued)</h1><p>The ticket relation is the only one that grows without bound during operation. Its composite
   index on <code>(vehicle_number, exit_time)</code> keeps the "is this vehicle already parked?"
   check and the active-session lookup equally cheap as history accumulates.</p><h2>4.6 ParkingTickets</h2>
       <p class="table-desc">One row per parking session. exit_time and total_fee are NULL while the session is open, so an active session is simply a row with a NULL exit_time.</p>
       <table class="grid schema"><thead><tr><th>Key</th><th>Column</th><th>Type</th><th>Null</th><th>Default</th><th>References</th></tr></thead><tbody><tr><td>PK</td><td><code>ticket_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td></td></tr><tr><td>FK</td><td><code>vehicle_number</code></td><td><code>varchar(20)</code></td><td>NOT NULL</td><td>&mdash;</td><td><code>vehicles(vehicle_number)</code></td></tr><tr><td>FK</td><td><code>slot_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td><code>parkingslots(slot_id)</code></td></tr><tr><td>FK</td><td><code>employee_id</code></td><td><code>int</code></td><td>NOT NULL</td><td>&mdash;</td><td><code>employees(employee_id)</code></td></tr><tr><td></td><td><code>entry_time</code></td><td><code>datetime</code></td><td>NOT NULL</td><td><code>CURRENT_TIMESTAMP</code></td><td></td></tr><tr><td></td><td><code>exit_time</code></td><td><code>datetime</code></td><td>NULL</td><td>&mdash;</td><td></td></tr><tr><td></td><td><code>total_fee</code></td><td><code>decimal(10,2)</code></td><td>NULL</td><td>&mdash;</td><td></td></tr></tbody></table><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>10</span></div></div>
-<div class="page"><h1 class="section">5. SQL &amp; DDL Queries</h1><p>The database is created from a single script. The statements below are the
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">5. SQL &amp; DDL Queries</h1><p>The database is created from a single script. The statements below are the
 exact DDL used by the deployed schema, including the storage engine, character set and every
 referential constraint. Foreign keys use <code>ON UPDATE CASCADE</code> so a corrected key
 propagates, and <code>ON DELETE RESTRICT</code> so history cannot be orphaned by deleting a
@@ -349,7 +351,7 @@ CREATE TABLE Vehicles (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;</pre><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>11</span></div></div>
-<div class="page"><h1 class="section">5. SQL &amp; DDL Queries (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">5. SQL &amp; DDL Queries (continued)</h1>
 <h2>5.2 Staff, floors and bays</h2>
 <pre class="code ">CREATE TABLE Employees (
     employee_id INT             NOT NULL AUTO_INCREMENT,
@@ -381,7 +383,7 @@ CREATE TABLE ParkingSlots (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;</pre><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>12</span></div></div>
-<div class="page"><h1 class="section">5. SQL &amp; DDL Queries (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">5. SQL &amp; DDL Queries (continued)</h1>
 <h2>5.3 Ticket relation</h2>
 <pre class="code ">CREATE TABLE ParkingTickets (
     ticket_id       INT                 NOT NULL AUTO_INCREMENT,
@@ -410,7 +412,7 @@ CREATE TABLE ParkingSlots (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;</pre>
 <h2>5.4 Indexes and why they exist</h2>
 <table class="grid "><thead><tr><th>Index</th><th>Relation</th><th>Purpose</th></tr></thead><tbody><tr><td>PRIMARY</td><td>all six relations</td><td>Unique row identity; every foreign key targets a primary key.</td></tr><tr><td><code>idx_vehicles_user</code></td><td>Vehicles</td><td>Loads the vehicle list for a customer at the entry gate.</td></tr><tr><td><code>idx_slots_availability</code></td><td>ParkingSlots</td><td>Makes the automatic allocation lookup (<code>slot_type</code> + <code>is_occupied</code>) a range scan instead of a table scan.</td></tr><tr><td><code>idx_slots_pillar</code></td><td>ParkingSlots</td><td>Backs the per-section free-bay counts that colour the pillar grid.</td></tr><tr><td><code>idx_tickets_active</code></td><td>ParkingTickets</td><td>Detects "vehicle already parked" and finds open sessions without scanning history.</td></tr><tr><td><code>idx_tickets_slot</code></td><td>ParkingTickets</td><td>Supports joins from the bay side and future occupancy reporting.</td></tr></tbody></table><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>13</span></div></div>
-<div class="page"><h1 class="section">6. Sample DML Queries</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">6. Sample DML Queries</h1>
 <p>Three kinds of DML reach the database at runtime: the inserts performed during registration,
 the inserts and updates that implement the two gates, and the reads that populate the dashboards.
 The statements below are the ones the application actually issues, shown with representative
@@ -447,7 +449,7 @@ INSERT INTO ParkingTickets (vehicle_number, slot_id, employee_id, entry_time)
 VALUES ('KA-01-AB-1234', 1, 1, NOW());
 
 UPDATE ParkingSlots SET is_occupied = TRUE WHERE slot_id = 1;</pre><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>14</span></div></div>
-<div class="page"><h1 class="section">6. Sample DML Queries (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">6. Sample DML Queries (continued)</h1>
 <h2>6.3 Exit gate</h2>
 <pre class="code ">-- Most recent open session for the customer
 SELECT pt.* FROM ParkingTickets pt
@@ -477,7 +479,7 @@ SELECT COUNT(*) FROM ParkingTickets WHERE vehicle_number = ? AND exit_time IS NU
 <table class="grid narrow"><thead><tr><th>Relation</th><th>Rows</th></tr></thead><tbody><tr><td>﻿Users</td><td>16</td></tr><tr><td>Vehicles</td><td>28</td></tr><tr><td>Employees</td><td>2</td></tr><tr><td>Floors</td><td>3</td></tr><tr><td>ParkingSlots</td><td>144</td></tr><tr><td>Slots 2W</td><td>72</td></tr><tr><td>Slots 4W</td><td>72</td></tr><tr><td>Occupied</td><td>0</td></tr><tr><td>Tickets</td><td>1</td></tr></tbody></table>
 <p class="note">Counted immediately after the demonstration run shown in Section&nbsp;7, in which one
 new customer registered, one vehicle was parked and then released.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>15</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots</h1>
 <p>The screens below were captured from the running application against the live database. They are
 presented in the order of a complete parking lifecycle: registration, login, entry, allocation,
 settlement and the customer's view of an emptied dashboard. The database tables that back these
@@ -485,52 +487,52 @@ screens follow in Section&nbsp;7.2.</p>
 <h2>7.1 Frontend &mdash; customer and gate screens</h2>
 <figure class="shot "><img src="report_assets/shots/01_portal.png" alt="Figure 7.1 &amp;mdash; Portal selection. The application starts by asking whether the operator is a customer or an employee."/><figcaption>Figure 7.1 &mdash; Portal selection. The application starts by asking whether the operator is a customer or an employee.</figcaption></figure>
 <figure class="shot "><img src="report_assets/shots/02_signup.png" alt="Figure 7.2 &amp;mdash; Customer registration. Name, password, number plate and vehicle type are captured in one form; the vehicle is created in the same transaction as the customer."/><figcaption>Figure 7.2 &mdash; Customer registration. Name, password, number plate and vehicle type are captured in one form; the vehicle is created in the same transaction as the customer.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>16</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot small"><img src="report_assets/shots/03_signup_success.png" alt="Figure 7.3 &amp;mdash; Confirmation dialog returning the generated identifier. This value is the customer's credential at the gate."/><figcaption>Figure 7.3 &mdash; Confirmation dialog returning the generated identifier. This value is the customer's credential at the gate.</figcaption></figure>
 <figure class="shot "><img src="report_assets/shots/04_login.png" alt="Figure 7.4 &amp;mdash; Customer login. Identifiers follow the USR-XXXX format and are validated before the database is queried."/><figcaption>Figure 7.4 &mdash; Customer login. Identifiers follow the USR-XXXX format and are validated before the database is queried.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>17</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot "><img src="report_assets/shots/05_employee_login.png" alt="Figure 7.5 &amp;mdash; Employee login. Gate staff are provisioned by the administrator rather than self-registered."/><figcaption>Figure 7.5 &mdash; Employee login. Gate staff are provisioned by the administrator rather than self-registered.</figcaption></figure>
 <figure class="shot "><img src="report_assets/shots/06_entry_search.png" alt="Figure 7.6 &amp;mdash; Entry gate after a customer lookup. The vehicle dropdown is populated from the vehicles registered to that customer."/><figcaption>Figure 7.6 &mdash; Entry gate after a customer lookup. The vehicle dropdown is populated from the vehicles registered to that customer.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>18</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot "><img src="report_assets/shots/07_manual_grid.png" alt="Figure 7.7 &amp;mdash; Manual allocation grid for Floor 1. Each card is one pillar section; green cards report the free bays of the required type, red cards are full. Mixed sections such as "2 free" and "1 free" appear side by side because bay types are assigned per section, not per row."/><figcaption>Figure 7.7 &mdash; Manual allocation grid for Floor 1. Each card is one pillar section; green cards report the free bays of the required type, red cards are full. Mixed sections such as "2 free" and "1 free" appear side by side because bay types are assigned per section, not per row.</figcaption></figure>
 <figure class="shot "><img src="report_assets/shots/08_manual_grid_selected.png" alt="Figure 7.8 &amp;mdash; A section chosen by the attendant. The amber outline marks the selection; the first free bay in that section becomes the ticket's bay."/><figcaption>Figure 7.8 &mdash; A section chosen by the attendant. The amber outline marks the selection; the first free bay in that section becomes the ticket's bay.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>19</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot small"><img src="report_assets/shots/09_entry_receipt.png" alt="Figure 7.9 &amp;mdash; Entry receipt written after the ticket and the bay update are committed."/><figcaption>Figure 7.9 &mdash; Entry receipt written after the ticket and the bay update are committed.</figcaption></figure>
 <figure class="shot "><img src="report_assets/shots/10_user_dashboard.png" alt="Figure 7.10 &amp;mdash; Customer dashboard showing the live session: ticket, vehicle, type, floor, pillar section and entry time."/><figcaption>Figure 7.10 &mdash; Customer dashboard showing the live session: ticket, vehicle, type, floor, pillar section and entry time.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>20</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot "><img src="report_assets/shots/11_exit_summary.png" alt="Figure 7.11 &amp;mdash; Exit gate. The open session is priced from the stored entry timestamp: a three-hour four-wheeler session at the ₹80 hourly rate."/><figcaption>Figure 7.11 &mdash; Exit gate. The open session is priced from the stored entry timestamp: a three-hour four-wheeler session at the ₹80 hourly rate.</figcaption></figure>
 <figure class="shot small"><img src="report_assets/shots/12_exit_receipt.png" alt="Figure 7.12 &amp;mdash; Settlement receipt itemising the rate, billable hours and total. Confirming also released the bay."/><figcaption>Figure 7.12 &mdash; Settlement receipt itemising the rate, billable hours and total. Confirming also released the bay.</figcaption></figure><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>21</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <figure class="shot "><img src="report_assets/shots/13_dashboard_empty.png" alt="Figure 7.13 &amp;mdash; The same customer after settlement. Because the dashboard is rebuilt from the database on every login, the closed session disappears and the empty state is shown immediately."/><figcaption>Figure 7.13 &mdash; The same customer after settlement. Because the dashboard is rebuilt from the database on every login, the closed session disappears and the empty state is shown immediately.</figcaption></figure>
 <h2>7.2 Backend &mdash; database tables</h2>
 <p>The tables below are rendered from the live database with the same queries the application uses;
 they are not mock-ups. Column headings match the physical schema.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>22</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <h2>Backend &mdash; Users</h2>
 <table class="grid rows"><thead><tr><th>user_id</th><th>name</th><th>created_at</th></tr></thead><tbody><tr><td><code>﻿USR-1001</code></td><td>Aryan Kumar</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1093</code></td><td>Fatima Sheikh</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1187</code></td><td>Karan Malhotra</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1294</code></td><td>Ishita Bose</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1358</code></td><td>Vikram Joshi</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1467</code></td><td>Sanjay Gupta</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-1573</code></td><td>Meera Iyer</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-2045</code></td><td>Priya Sharma</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-3782</code></td><td>Rahul Verma</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-4510</code></td><td>Sneha Patel</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-5267</code></td><td>Amit Singh</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-6104</code></td><td>Neha Kulkarni</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-7321</code></td><td>Rohan Mehta</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-8401</code></td><td>Nisha Verma</td><td>2026-10-23 06:14:22</td></tr><tr><td><code>USR-8456</code></td><td>Divya Nair</td><td>2026-10-23 06:14:18</td></tr><tr><td><code>USR-9572</code></td><td>Arjun Rao</td><td>2026-10-23 06:14:18</td></tr></tbody></table>
 <p class="note">Sixteen customer accounts: the fifteen seeded demonstration accounts plus the one
 created during the run captured above. Identifiers are generated by the application and are never
 reused.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>23</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <h2>Backend &mdash; Vehicles</h2>
 <table class="grid rows"><thead><tr><th>vehicle_number</th><th>user_id</th><th>type</th></tr></thead><tbody><tr><td><code>﻿DL-03-GH-3456</code></td><td><code>USR-3782</code></td><td>2W</td></tr><tr><td><code>DL-03-IJ-7890</code></td><td><code>USR-3782</code></td><td>4W</td></tr><tr><td><code>GJ-04-KL-1122</code></td><td><code>USR-4510</code></td><td>2W</td></tr><tr><td><code>GJ-04-MN-7788</code></td><td><code>USR-4510</code></td><td>2W</td></tr><tr><td><code>GJ-05-QR-7788</code></td><td><code>USR-7321</code></td><td>2W</td></tr><tr><td><code>GJ-05-ST-9900</code></td><td><code>USR-7321</code></td><td>4W</td></tr><tr><td><code>KA-01-AB-1234</code></td><td><code>USR-1001</code></td><td>4W</td></tr><tr><td><code>KA-01-CD-5678</code></td><td><code>USR-1001</code></td><td>2W</td></tr><tr><td><code>KA-01-EF-9012</code></td><td><code>USR-1001</code></td><td>4W</td></tr><tr><td><code>KL-07-UV-4455</code></td><td><code>USR-8456</code></td><td>4W</td></tr><tr><td><code>MH-02-EF-9012</code></td><td><code>USR-2045</code></td><td>4W</td></tr><tr><td><code>MH-02-GH-3456</code></td><td><code>USR-2045</code></td><td>2W</td></tr><tr><td><code>MH-12-XY-1122</code></td><td><code>USR-6104</code></td><td>4W</td></tr><tr><td><code>MH-12-ZA-3344</code></td><td><code>USR-6104</code></td><td>2W</td></tr><tr><td><code>PB-11-CD-7788</code></td><td><code>USR-1187</code></td><td>4W</td></tr><tr><td><code>RJ-14-GH-1234</code></td><td><code>USR-1358</code></td><td>4W</td></tr><tr><td><code>RJ-14-IJ-5678</code></td><td><code>USR-1358</code></td><td>2W</td></tr><tr><td><code>RJ14-QX-7788</code></td><td><code>USR-8401</code></td><td>4W</td></tr><tr><td><code>TN-09-WX-6677</code></td><td><code>USR-9572</code></td><td>2W</td></tr><tr><td><code>TN-19-MN-3690</code></td><td><code>USR-1573</code></td><td>2W</td></tr><tr><td><code>TN-19-OP-8021</code></td><td><code>USR-1573</code></td><td>4W</td></tr><tr><td><code>TS-09-AB-5566</code></td><td><code>USR-1093</code></td><td>2W</td></tr><tr><td><code>TS-09-YZ-2233</code></td><td><code>USR-1093</code></td><td>4W</td></tr><tr><td><code>UP-05-MN-3344</code></td><td><code>USR-5267</code></td><td>4W</td></tr><tr><td><code>UP-05-OP-5566</code></td><td><code>USR-5267</code></td><td>2W</td></tr><tr><td><code>UP-05-QR-1123</code></td><td><code>USR-5267</code></td><td>4W</td></tr><tr><td><code>UP-18-KL-2468</code></td><td><code>USR-1467</code></td><td>4W</td></tr><tr><td><code>WB-12-EF-9900</code></td><td><code>USR-1294</code></td><td>2W</td></tr></tbody></table>
 <p class="note">Twenty-eight registered vehicles. The plate is the primary key, so the same vehicle
 cannot be registered twice under different customers.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>24</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <h2>Backend &mdash; ParkingSlots, Floor 1 (aggregated per section)</h2>
 <table class="grid rows"><thead><tr><th>Floor</th><th>Pillar section</th><th>2W bays</th><th>4W bays</th><th>Occupancy</th></tr></thead><tbody><tr><td>﻿1</td><td><code>A1-A2</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>A3-A4</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>A5-A6</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>A7-A8</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>B1-B2</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>B3-B4</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>B5-B6</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>B7-B8</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>C1-C2</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>C3-C4</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>C5-C6</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>C7-C8</code></td><td>1</td><td>2</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>D1-D2</code></td><td>0</td><td>3</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>D3-D4</code></td><td>2</td><td>1</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>D5-D6</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr><tr><td>1</td><td><code>D7-D8</code></td><td>3</td><td>0</td><td><span class="tag-free">free</span></td></tr></tbody></table>
 <p class="note">Bay types are assigned per section at seed time, so the mix is irregular: some
 sections are entirely four-wheeler, some entirely two-wheeler, and others hold both. This is what
 the grid in Figure&nbsp;7.7 displays as "2 free", "1 free" or FULL. The three floors hold 144 bays
 in total, split evenly between the two vehicle types.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>25</span></div></div>
-<div class="page"><h1 class="section">7. Screenshots (continued)</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">7. Screenshots (continued)</h1>
 <h2>Backend &mdash; ParkingTickets after settlement</h2>
 <table class="grid rows"><thead><tr><th>ticket</th><th>vehicle</th><th>slot</th><th>employee</th><th>entry_time</th><th>exit_time</th><th>total_fee</th></tr></thead><tbody><tr><td><code>﻿1</code></td><td>KA-01-AB-1234</td><td><code>1</code></td><td><code>1</code></td><td>2026-10-23 03:14:31</td><td>2026-10-23 06:14:37</td><td>240.00</td></tr></tbody></table>
 <p class="note">A single closed session remains from the demonstration run. The amount equals three
 commenced hours at the ₹80 four-wheeler rate; the first hour was free and the partial minute is
 rounded up to the next commenced hour. The corresponding slot row is back to
 <code>is_occupied = FALSE</code>.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>26</span></div></div>
-<div class="page"><h1 class="section">8. Conclusion</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">8. Conclusion</h1>
 <p>The project set out to show that a parking facility can be operated from a relational database
 and an ordinary desktop application, without barrier gates, sensors or tags. That goal has been
 met: the delivered build performs registration, gate operations, allocation, billing and receipting
@@ -568,7 +570,7 @@ grouped query, which in turn justified the composite index on
 index selection &mdash; with the discipline of writing code that cannot leave the database in an
 inconsistent state when something fails midway. It also required a layered Java codebase
 (model, DAO, view) that keeps SQL out of the user interface.</p><div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>27</span></div></div>
-<div class="page"><h1 class="section">9. References</h1>
+<div class="page"><div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div><h1 class="section">9. References</h1>
 <ol class="refs">
   <li>Oracle Corporation. <i>Java Platform, Standard Edition 21 API Specification</i>. Available at:
     https://docs.oracle.com/en/java/javase/21/docs/api/</li>

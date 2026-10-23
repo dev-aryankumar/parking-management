@@ -74,11 +74,11 @@ const code = (text, cls = '') => `<pre class="code ${cls}">${esc(text)}</pre>`;
 // ---------------------------------------------------------------------- cover
 page(`
 <div class="cover">
+  <img class="cover-logo" src="report_assets/logo.png" alt="Manipal University Jaipur"/>
   <div class="cover-top">A PROJECT REPORT on</div>
   <h1 class="cover-title">Smart Parking Management System</h1>
   <div class="cover-sub">A Zero-Hardware Desktop Solution using Java Swing, JDBC and MySQL</div>
   <div class="cover-rule"></div>
-  <img class="cover-logo" src="report_assets/muj_logo.jpg" alt="Manipal University Jaipur"/>
   <div class="cover-block">
     <div>Submitted to <b>Manipal University Jaipur</b></div>
     <div>Towards the partial fulfillment for the Award of the Degree of</div>
@@ -641,14 +641,16 @@ const html = `<!DOCTYPE html>
   .page-footer { position:absolute; left:0; right:0; bottom:-3mm; display:flex;
                  justify-content:space-between; font-size:8pt; color:#7A8A8B;
                  border-top:0.6px solid #CFDDDD; padding-top:1.6mm; }
+  .page-logo { position:absolute; top:-12.5mm; right:0; }
+  .page-logo img { height:9mm; }
 
   /* cover */
-  .cover { text-align:center; padding-top:6mm; }
+  .cover { text-align:center; padding-top:0; }
   .cover-top { font-size:12pt; letter-spacing:0.5px; }
   .cover-title { font-size:25pt; color:#0F4C5C; margin:4mm 0 2mm; line-height:1.15; }
   .cover-sub { font-size:13pt; color:#137E7E; font-style:italic; }
   .cover-rule { width:48mm; height:3px; background:#F2A900; margin:6mm auto; }
-  .cover-logo { width:115mm; height:22.9mm; object-fit:contain; margin:2mm 0 6mm; }
+  .cover-logo { width:70mm; display:block; margin:0 auto 8mm; }
   .cover-block { margin-bottom:6mm; font-size:12pt; line-height:1.7; }
   .cover-degree { font-weight:700; font-size:13pt; }
   .cover-small { font-size:12pt; }
@@ -705,7 +707,9 @@ const html = `<!DOCTYPE html>
   ol.refs { font-size:9.6pt; padding-left:6mm; }
   ol.refs li { margin-bottom:2.4mm; }
 </style></head><body>
-${pages.map((p, i) => `<div class="page">${p.html}${p.footer
+${pages.map((p, i) => `<div class="page">${i > 0
+  ? '<div class="page-logo"><img src="report_assets/logo.png" alt="Manipal University Jaipur"/></div>'
+  : ''}${p.html}${p.footer
   ? `<div class="page-footer"><span>Smart Parking Management System &mdash; Project Report</span><span>${i + 1}</span></div>`
   : ''}</div>`).join('\n')}
 </body></html>`;
